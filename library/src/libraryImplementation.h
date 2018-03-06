@@ -3,7 +3,7 @@
 #include "utils.h"
 #include "types.h"
 #include "error.h"
-#include "imageDetectionLibrary.h"
+#include "bopbol.h"
 #include <mutex>
 
 using namespace cv;

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
-#include "imageDetectionLibrary.h"
+#include "bopbol.h"
 
 
 #define TO_STREAM(stream, variable)                            \
@@ -18,7 +18,7 @@
 #endif
 
 void processingThreadFunction(void* library_state) {
-	UNITY_launchImageProcessing(library_state);
+	bbLaunch(library_state);
 }
 
 
@@ -27,40 +27,40 @@ int main() {
 	MSG("Initializing testing project");
 
 	MSG("Able to connect to DLL?");
-	LOG(UNITY_isAbleToConnectToDLL());
+	LOG(bbIsCallable());
 
 	MSG("Creating library local state");
-	void* library_state = UNITY_createLibraryState();
+	void* library_state = bbCreateInstance();
 	LOG(library_state);
 
 
 	MSG("Testing configuration functions");
-	UNITY_setBall_HSVRanges(library_state, 23, 43, 30, 190, 50, 250);
-	UNITY_setBall_RadiusThreshold(library_state, 4);
-	UNITY_setConfigurationParameters(library_state, 1, true, true, true);
-	UNITY_setCoordinateCallback(library_state, [](float x, float y) -> int {
+	bbSetBallHSVRanges(library_state, 23, 43, 30, 190, 50, 250);
+	bbSetBallRadiusThreshold(library_state, 4);
+	bbSetConfigurationParameters(library_state, 1, true, true, true);
+	bbSetCoordinateCallback(library_state, [](float x, float y) -> int {
 		LOG(x);
 		LOG(y);
 		MSG("\n\n");
 		return 1;
 	});
-	UNITY_setErrorCallback(library_state, NULL);
+	bbSetErrorCallback(library_state, NULL);
 
 	MSG("Initiating image detection");
-	UNITY_initImageDetection(library_state);
+	bbInit(library_state);
 
 	MSG("Calibrating projection");
-	UNITY_startProjectionCalibration(library_state);
+	bbStartAreaCalibration(library_state);
 	MSG("Calibrating with click");
-	UNITY_calibrateProjectionWithClick(library_state, 10, 60, 60);
-	ProjectionCalibration points = UNITY_endProjectionCalibration(library_state);
+	bbCalibrateAreaWithClick(library_state, 10, 60, 60);
+	ProjectionCalibration points = bbEndAreaCalibration(library_state);
 
 	MSG("Calibrating ball with click");
-	UNITY_calibrateBallWithClick(library_state, 10, 10, 10);
+	bbCalibrateBallWithClick(library_state, 10, 10, 10);
 
 	MSG("Getting and setting calibration settings");
-	CalibrationSettings settings = UNITY_getCalibrationSettings(library_state);
-	UNITY_setCalibrationSettings(library_state, settings);
+	CalibrationSettings settings = bbGetCalibrationSettings(library_state);
+	bbSetCalibrationSettings(library_state, settings);
 
 	MSG("Launching image processing");
 	std::thread processing_thread(processingThreadFunction, library_state);
@@ -69,7 +69,7 @@ int main() {
 	std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 
 	MSG("Stopping image processing");
-	UNITY_stopImageDetection(library_state);
+	bbStop(library_state);
 
 	MSG("Waiting for the thread to join");
 	processing_thread.join();
@@ -84,14 +84,14 @@ int main() {
 	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
 	MSG("Stopping image processing");
-	UNITY_stopImageDetection(library_state);
+	bbStop(library_state);
 
 	MSG("Waiting for the thread to join");
 	processing_thread_2.join();
 
 
 	MSG("Destroying library state");
-	UNITY_destroyLibraryState(library_state);
+	bbDestroyInstance(library_state);
 
 	MSG("We are more DONE than DANONE");
 	PRESS_TO_CONTINUE;

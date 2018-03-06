@@ -1,31 +1,31 @@
-#include "imageDetectionLibrary.h"
+#include "bopbol.h"
 #include "libraryImplementation.h"
 
-bool UNITY_isAbleToConnectToDLL() {
+bool bbIsCallable() {
 	return true;
 }
 
-int UNITY_initImageDetection(STATE_TYPE library_state) {
+int bbInit(STATE_TYPE library_state) {
 	return initImageDetection(library_state);
 }
 
-int UNITY_launchImageProcessing(STATE_TYPE library_state) {
+int bbLaunch(STATE_TYPE library_state) {
 	return launchImageProcessing(library_state);
 }
 
-int UNITY_stopImageDetection(STATE_TYPE library_state) {
+int bbStop(STATE_TYPE library_state) {
 	return stopImageDetection(library_state);
 }
 
-STATE_TYPE UNITY_createLibraryState() {
+STATE_TYPE bbCreateInstance() {
 	return createLibraryState();
 }
 
-void UNITY_destroyLibraryState(STATE_TYPE library_state) {
+void bbDestroyInstance(STATE_TYPE library_state) {
 	return destroyLibraryState(library_state);
 }
 
-int UNITY_setBall_HSVRanges(
+int bbSetBallHSVRanges(
 	STATE_TYPE library_state,
 	int iLowH, int iHighH, int iLowS,
 	int iHighS, int iLowV, int iHighV) {
@@ -34,13 +34,13 @@ int UNITY_setBall_HSVRanges(
 		iHighS, iLowV, iHighV);
 }
 
-int UNITY_setBall_RadiusThreshold(
+int bbSetBallRadiusThreshold(
 	STATE_TYPE library_state,
 	int radius) {
 	return setBall_RadiusThreshold(library_state, radius);
 }
 
-int UNITY_setConfigurationParameters(
+int bbSetConfigurationParameters(
 	STATE_TYPE library_state,
 	int show_collisions,
 	bool using_video_file,
@@ -51,30 +51,30 @@ int UNITY_setConfigurationParameters(
 		show_trackbars, output_frames);
 }
 
-int UNITY_setCoordinateCallback(
+int bbSetCoordinateCallback(
 	STATE_TYPE library_state,
 	COORDINATE_CALLBACK callback_function_ptr) {
 	return setCoordinateCallback(library_state, callback_function_ptr);
 }
 
-int UNITY_setErrorCallback(
+int bbSetErrorCallback(
 	STATE_TYPE library_state,
 	ERROR_CALLBACK callback_function_ptr) {
 	return setErrorCallback(library_state, callback_function_ptr);
 }
 
 
-int UNITY_startProjectionCalibration(
+int bbStartAreaCalibration(
 	STATE_TYPE library_state) {
 	return startProjectionCalibration(library_state);
 }
 
-ProjectionCalibration UNITY_endProjectionCalibration(
+ProjectionCalibration bbEndAreaCalibration(
 	STATE_TYPE library_state) {
 	return endProjectionCalibration(library_state);
 }
 
-int UNITY_calibrateProjectionWithClick(
+int bbCalibrateAreaWithClick(
 	STATE_TYPE library_state,
 	int hue_threshold,
 	int saturation_threshold,
@@ -85,7 +85,7 @@ int UNITY_calibrateProjectionWithClick(
 		value_threshold);
 }
 
-int UNITY_calibrateProjectionWithHSVRanges(
+int bbCalibrateAreaWithHSVRanges(
 	STATE_TYPE library_state,
 	int iLowH, int iHighH, int iLowS,
 	int iHighS, int iLowV, int iHighV) {
@@ -94,7 +94,7 @@ int UNITY_calibrateProjectionWithHSVRanges(
 		iHighS, iLowV, iHighV);
 }
 
-IMAGE_DLL_API int UNITY_calibrateBallWithClick(
+IMAGE_DLL_API int bbCalibrateBallWithClick(
 	STATE_TYPE library_state,
 	int hue_threshold,
 	int saturation_threshold,
@@ -106,11 +106,11 @@ IMAGE_DLL_API int UNITY_calibrateBallWithClick(
 }
 
 
-CalibrationSettings UNITY_getCalibrationSettings(STATE_TYPE library_state) {
+CalibrationSettings bbGetCalibrationSettings(STATE_TYPE library_state) {
 	return getCalibrationSettings(library_state);
 }
 
-int UNITY_setCalibrationSettings(STATE_TYPE library_state, CalibrationSettings calibration_settings) {
+int bbSetCalibrationSettings(STATE_TYPE library_state, CalibrationSettings calibration_settings) {
 	return setCalibrationSettings(library_state, calibration_settings);
 }
 

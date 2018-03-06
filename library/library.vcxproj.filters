@@ -27,7 +27,7 @@
     <ClCompile Include="src\libraryImplementation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\imageDetectionLibrary.cpp">
+    <ClCompile Include="src\bopbol.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,7 +44,7 @@
     <ClInclude Include="src\libraryImplementation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\imageDetectionLibrary.h">
+    <ClInclude Include="src\bopbol.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

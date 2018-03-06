@@ -62,39 +62,39 @@ extern "C" {
 	//	Functions to create and destroy the local state of the library
 	//	from outside.
 	//
-	IMAGE_DLL_API STATE_TYPE UNITY_createLibraryState();
-	IMAGE_DLL_API void UNITY_destroyLibraryState(STATE_TYPE library_state);
+	IMAGE_DLL_API STATE_TYPE bbCreateInstance();
+	IMAGE_DLL_API void bbDestroyInstance(STATE_TYPE library_state);
 
 	//
 	//	Function used to check if the outside program is able to call this DLL
 	//	correctly,
 	//
-	IMAGE_DLL_API bool UNITY_isAbleToConnectToDLL();
+	IMAGE_DLL_API bool bbIsCallable();
 
 	//
 	//	Initiates all the variables in the state necessary for the image processing
 	//
-	IMAGE_DLL_API int UNITY_initImageDetection(STATE_TYPE library_state);
+	IMAGE_DLL_API int bbInit(STATE_TYPE library_state);
 
 	//
 	//	Functions to both launch and stop the processing of the images
 	//
-	IMAGE_DLL_API int UNITY_launchImageProcessing(STATE_TYPE library_state);
-	IMAGE_DLL_API int UNITY_stopImageDetection(STATE_TYPE library_state);
+	IMAGE_DLL_API int bbLaunch(STATE_TYPE library_state);
+	IMAGE_DLL_API int bbStop(STATE_TYPE library_state);
 
 	//
 	//	Functions to configure local state
 	//
-	IMAGE_DLL_API int UNITY_setBall_HSVRanges(
+	IMAGE_DLL_API int bbSetBallHSVRanges(
 		STATE_TYPE library_state,
 		int iLowH, int iHighH, int iLowS,
 		int iHighS, int iLowV, int iHighV);
 
-	IMAGE_DLL_API int UNITY_setBall_RadiusThreshold(
+	IMAGE_DLL_API int bbSetBallRadiusThreshold(
 		STATE_TYPE library_state,
 		int radius);
 
-	IMAGE_DLL_API int UNITY_setConfigurationParameters(
+	IMAGE_DLL_API int bbSetConfigurationParameters(
 		STATE_TYPE library_state,
 		int show_collisions,
 		bool using_video_file,
@@ -103,13 +103,13 @@ extern "C" {
 
 
 	//
-	//	Functions to set up the callbacks to Unity
+	//	Functions to set up the callbacks for all the different actions
 	//
-	IMAGE_DLL_API int UNITY_setCoordinateCallback(
+	IMAGE_DLL_API int bbSetCoordinateCallback(
 		STATE_TYPE library_state,
 		COORDINATE_CALLBACK callback_function_ptr);
 
-	IMAGE_DLL_API int UNITY_setErrorCallback(
+	IMAGE_DLL_API int bbSetErrorCallback(
 		STATE_TYPE library_state,
 		ERROR_CALLBACK callback_function_ptr);
 
@@ -118,24 +118,24 @@ extern "C" {
 	//	Functions dedicated to calibration
 	//
 
-	IMAGE_DLL_API int UNITY_startProjectionCalibration(
+	IMAGE_DLL_API int bbStartAreaCalibration(
 		STATE_TYPE library_state);
 
-	IMAGE_DLL_API ProjectionCalibration UNITY_endProjectionCalibration(
+	IMAGE_DLL_API ProjectionCalibration bbEndAreaCalibration(
 		STATE_TYPE library_state);
 
-	IMAGE_DLL_API int UNITY_calibrateProjectionWithClick(
+	IMAGE_DLL_API int bbCalibrateAreaWithClick(
 		STATE_TYPE library_state,
 		int hue_threshold,
 		int saturation_threshold,
 		int value_threshold);
 
-	IMAGE_DLL_API int UNITY_calibrateProjectionWithHSVRanges(
+	IMAGE_DLL_API int bbCalibrateAreaWithHSVRanges(
 		STATE_TYPE library_state,
 		int iLowH, int iHighH, int iLowS,
 		int iHighS, int iLowV, int iHighV);
 
-	IMAGE_DLL_API int UNITY_calibrateBallWithClick(
+	IMAGE_DLL_API int bbCalibrateBallWithClick(
 		STATE_TYPE library_state,
 		int hue_threshold,
 		int saturation_threshold,
@@ -145,8 +145,8 @@ extern "C" {
 	//	Functions to save and load calibration settings
 	//
 
-	IMAGE_DLL_API CalibrationSettings UNITY_getCalibrationSettings(STATE_TYPE library_state);
+	IMAGE_DLL_API CalibrationSettings bbGetCalibrationSettings(STATE_TYPE library_state);
 
-	IMAGE_DLL_API int UNITY_setCalibrationSettings(STATE_TYPE library_state, CalibrationSettings calibration_settings);
+	IMAGE_DLL_API int bbSetCalibrationSettings(STATE_TYPE library_state, CalibrationSettings calibration_settings);
 
 }
