@@ -5,8 +5,6 @@
 //	in types.h as you probably could have guessed :)
 //
 
-using namespace cv;
-
 void deque_init(Deque * deque) {
 
 	//
@@ -14,7 +12,7 @@ void deque_init(Deque * deque) {
 	//	It works with floats which is the thing that
 	//	Point2f has inside, so no problem here
 	//
-	std::memset(&(deque->data), 0, sizeof(Point2f)*DEQUE_LENGTH);
+	std::memset(&(deque->data), 0, sizeof(cv::Point2f)*DEQUE_LENGTH);
 
 	//
 	//	And position and size start and 0
@@ -25,7 +23,7 @@ void deque_init(Deque * deque) {
 
 }
 
-void deque_insertElement(Deque * deque, Point2f element) {
+void deque_insertElement(Deque * deque, cv::Point2f element) {
 
 	deque->data[deque->tail_position] = element;
 	deque->tail_position = (deque->tail_position + 1) % DEQUE_LENGTH;
@@ -33,7 +31,7 @@ void deque_insertElement(Deque * deque, Point2f element) {
 
 }
 
-Point2f deque_getElementAt(Deque * deque, unsigned int position) {
+cv::Point2f deque_getElementAt(Deque * deque, unsigned int position) {
 
 	int offset_position = (deque->tail_position - 1 - position);
 

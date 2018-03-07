@@ -17,8 +17,8 @@
 #define PRESS_TO_CONTINUE system("read");
 #endif
 
-void processingThreadFunction(void* library_state) {
-	bbLaunch(library_state);
+void processingThreadFunction(BbInstance instance) {
+	bbLaunch(instance);
 }
 
 
@@ -26,50 +26,54 @@ int main() {
 
 	MSG("Initializing testing project");
 
+	MSG("Library Version:");
+	MSG(BB_VERSION);
+
+
 	MSG("Able to connect to DLL?");
 	LOG(bbIsCallable());
 
 	MSG("Creating library local state");
-	void* library_state = bbCreateInstance();
-	LOG(library_state);
+	BbInstance instance = bbCreateInstance();
+	LOG(instance);
 
 
 	MSG("Testing configuration functions");
-	bbSetBallHSVRanges(library_state, 23, 43, 30, 190, 50, 250);
-	bbSetBallRadiusThreshold(library_state, 4);
-	bbSetConfigurationParameters(library_state, 1, true, true, true);
-	bbSetCoordinateCallback(library_state, [](float x, float y) -> int {
+	bbSetBallHSVRanges(instance, 23, 43, 30, 190, 50, 250);
+	bbSetBallRadiusThreshold(instance, 4);
+	bbSetConfigurationParameters(instance, 1, true, true, true);
+	bbSetCoordinateCallback(instance, [](float x, float y) -> int {
 		LOG(x);
 		LOG(y);
 		MSG("\n\n");
 		return 1;
 	});
-	bbSetErrorCallback(library_state, NULL);
+	bbSetErrorCallback(instance, NULL);
 
 	MSG("Initiating image detection");
-	bbInit(library_state);
+	bbInit(instance);
 
 	MSG("Calibrating projection");
-	bbStartAreaCalibration(library_state);
+	bbStartAreaCalibration(instance);
 	MSG("Calibrating with click");
-	bbCalibrateAreaWithClick(library_state, 10, 60, 60);
-	ProjectionCalibration points = bbEndAreaCalibration(library_state);
+	bbCalibrateAreaWithClick(instance, 10, 60, 60);
+	BbAreaCalibration points = bbEndAreaCalibration(instance);
 
 	MSG("Calibrating ball with click");
-	bbCalibrateBallWithClick(library_state, 10, 10, 10);
+	bbCalibrateBallWithClick(instance, 10, 10, 10);
 
 	MSG("Getting and setting calibration settings");
-	CalibrationSettings settings = bbGetCalibrationSettings(library_state);
-	bbSetCalibrationSettings(library_state, settings);
+	BbCalibrationSettings settings = bbGetCalibrationSettings(instance);
+	bbSetCalibrationSettings(instance, settings);
 
 	MSG("Launching image processing");
-	std::thread processing_thread(processingThreadFunction, library_state);
+	std::thread processing_thread(processingThreadFunction, instance);
 
 	MSG("Processing for 60 seconds");
 	std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 
 	MSG("Stopping image processing");
-	bbStop(library_state);
+	bbStop(instance);
 
 	MSG("Waiting for the thread to join");
 	processing_thread.join();
@@ -78,20 +82,20 @@ int main() {
 	MSG("SECOND TIME!");
 
 	MSG("Launching image processing");
-	std::thread processing_thread_2(processingThreadFunction, library_state);
+	std::thread processing_thread_2(processingThreadFunction, instance);
 
 	MSG("Processing for only 1 second");
 	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
 	MSG("Stopping image processing");
-	bbStop(library_state);
+	bbStop(instance);
 
 	MSG("Waiting for the thread to join");
 	processing_thread_2.join();
 
 
 	MSG("Destroying library state");
-	bbDestroyInstance(library_state);
+	bbDestroyInstance(instance);
 
 	MSG("We are more DONE than DANONE");
 	PRESS_TO_CONTINUE;

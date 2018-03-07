@@ -5,7 +5,7 @@
 //	@@TODO: Send Unity the error using some kind of 
 //	callback function.
 //
-void manageError(ERROR id, char* message) {
+void manageError(BbError id, char* message) {
 
 	if (message != NULL) {
 		std::cerr << "ERROR [" << id << "]: " << message << std::endl;
@@ -15,7 +15,7 @@ void manageError(ERROR id, char* message) {
 	}
 }
 
-void manageError(ERROR_CALLBACK callback_function, ERROR id) {
+void manageError(BB_ERROR_CALLBACK callback_function, BbError id) {
 	if (callback_function != NULL) {
 		callback_function(id);
 	}

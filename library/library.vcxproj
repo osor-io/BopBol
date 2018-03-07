@@ -170,14 +170,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\error.cpp" />
-    <ClCompile Include="src\libraryImplementation.cpp" />
     <ClCompile Include="src\bopbol.cpp" />
     <ClCompile Include="src\types.cpp" />
     <ClCompile Include="src\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\error.h" />
-    <ClInclude Include="src\libraryImplementation.h" />
     <ClInclude Include="src\bopbol.h" />
     <ClInclude Include="src\types.h" />
     <ClInclude Include="src\utils.h" />

@@ -1,8 +1,7 @@
 #include "bopbol.h"
 
-#define SUCCESS	0;
-#define FAILURE	-1;
-enum ERROR {
+
+enum BbError {
 	DOIN_GOOD,
 	UNABLE_TO_OPEN_VIDEO,
 	COULD_NOT_READ_FRAME,
@@ -11,6 +10,6 @@ enum ERROR {
 };
 
 
-void manageError(ERROR id, char* message = nullptr);
+void manageError(BbError id, char* message = nullptr);
 
-void manageError(ERROR_CALLBACK callback_function, ERROR id);
+void manageError(BB_ERROR_CALLBACK callback_function, BbError id);
