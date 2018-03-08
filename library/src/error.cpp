@@ -15,7 +15,7 @@ void manageError(BbError id, char* message) {
 	}
 }
 
-void manageError(BB_ERROR_CALLBACK callback_function, BbError id) {
+void manageError(BbErrorCallback callback_function, BbError id) {
 	if (callback_function != NULL) {
 		callback_function(id);
 	}

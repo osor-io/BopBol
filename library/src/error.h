@@ -12,4 +12,4 @@ enum BbError {
 
 void manageError(BbError id, char* message = nullptr);
 
-void manageError(BB_ERROR_CALLBACK callback_function, BbError id);
+void manageError(BbErrorCallback callback_function, BbError id);

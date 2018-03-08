@@ -77,8 +77,8 @@ struct ConfigurationParameters {
 };
 
 struct CallbackFunctionPointers {
-	BB_COORDINATE_CALLBACK coordinate_callback = NULL;
-	BB_ERROR_CALLBACK error_callback = NULL;
+	BbCoordinateCallback coordinate_callback = NULL;
+	BbErrorCallback error_callback = NULL;
 };
 
 struct CalibrationState {
@@ -233,9 +233,9 @@ bool bbIsCallable() {
 	return true;
 }
 
-BbResult bbInit(BbInstance aInstance) {
+BbResult bbInit(BbInstance a_instance) {
 
-	BbInstance_T* instance = castInstance(aInstance);
+	BbInstance_T* instance = castInstance(a_instance);
 	if (instance == nullptr) return BB_FAILURE;
 
 
@@ -277,8 +277,8 @@ BbResult bbInit(BbInstance aInstance) {
 
 }
 
-BbResult bbLaunch(BbInstance aInstance) {
-	BbInstance_T* instance = castInstance(aInstance);
+BbResult bbLaunch(BbInstance a_instance) {
+	BbInstance_T* instance = castInstance(a_instance);
 	if (instance == nullptr) return BB_FAILURE;
 
 	//
@@ -344,9 +344,9 @@ BbResult bbLaunch(BbInstance aInstance) {
 	return BB_SUCCESS;
 }
 
-BbResult bbStop(BbInstance aInstance) {
+BbResult bbStop(BbInstance a_instance) {
 
-	BbInstance_T* instance = castInstance(aInstance);
+	BbInstance_T* instance = castInstance(a_instance);
 	if (instance == nullptr) return BB_FAILURE;
 
 	instance->s_should_stop = true;
@@ -373,8 +373,8 @@ BbInstance bbCreateInstance() {
 	return instance;
 }
 
-void bbDestroyInstance(BbInstance aInstance) {
-	BbInstance_T* instance = castInstance(aInstance);
+void bbDestroyInstance(BbInstance a_instance) {
+	BbInstance_T* instance = castInstance(a_instance);
 	if (instance == nullptr) return;
 
 	delete instance->s_video;
@@ -382,22 +382,22 @@ void bbDestroyInstance(BbInstance aInstance) {
 }
 
 BbResult bbSetBallHSVRanges(
-	BbInstance aInstance,
-	int iLowH, int iHighH, int iLowS,
-	int iHighS, int iLowV, int iHighV) {
+	BbInstance a_instance,
+	int a_low_h, int a_high_h, int a_low_s,
+	int a_high_s, int a_low_v, int a_high_v) {
 
-	BbInstance_T* instance = castInstance(aInstance);
+	BbInstance_T* instance = castInstance(a_instance);
 	if (instance == nullptr) return BB_FAILURE;
 
 
 	instance->s_configuration_mutex.lock();
 
-	instance->s_ball_detection_parameters.h_low = iLowH;
-	instance->s_ball_detection_parameters.h_high = iHighH;
-	instance->s_ball_detection_parameters.s_low = iLowS;
-	instance->s_ball_detection_parameters.s_high = iHighS;
-	instance->s_ball_detection_parameters.v_low = iLowV;
-	instance->s_ball_detection_parameters.v_high = iHighV;
+	instance->s_ball_detection_parameters.h_low = a_low_h;
+	instance->s_ball_detection_parameters.h_high = a_high_h;
+	instance->s_ball_detection_parameters.s_low = a_low_s;
+	instance->s_ball_detection_parameters.s_high = a_high_s;
+	instance->s_ball_detection_parameters.v_low = a_low_v;
+	instance->s_ball_detection_parameters.v_high = a_high_v;
 
 	instance->s_configuration_mutex.unlock();
 
@@ -405,10 +405,10 @@ BbResult bbSetBallHSVRanges(
 }
 
 BbResult bbSetBallRadiusThreshold(
-	BbInstance aInstance,
+	BbInstance a_instance,
 	int radius) {
 
-	BbInstance_T* instance = castInstance(aInstance);
+	BbInstance_T* instance = castInstance(a_instance);
 	if (instance == nullptr) return BB_FAILURE;
 
 
@@ -422,13 +422,13 @@ BbResult bbSetBallRadiusThreshold(
 }
 
 BbResult bbSetConfigurationParameters(
-	BbInstance aInstance,
+	BbInstance a_instance,
 	int show_collisions,
 	bool using_video_file,
 	bool show_trackbars,
 	bool output_frames) {
 
-	BbInstance_T* instance = castInstance(aInstance);
+	BbInstance_T* instance = castInstance(a_instance);
 	if (instance == nullptr) return BB_FAILURE;
 
 	instance->s_configuration_mutex.lock();
@@ -444,10 +444,10 @@ BbResult bbSetConfigurationParameters(
 }
 
 BbResult bbSetCoordinateCallback(
-	BbInstance aInstance,
-	BB_COORDINATE_CALLBACK callback_function_ptr) {
+	BbInstance a_instance,
+	BbCoordinateCallback callback_function_ptr) {
 
-	BbInstance_T* instance = castInstance(aInstance);
+	BbInstance_T* instance = castInstance(a_instance);
 	if (instance == nullptr) return BB_FAILURE;
 
 	instance->s_configuration_mutex.lock();
@@ -460,10 +460,10 @@ BbResult bbSetCoordinateCallback(
 }
 
 BbResult bbSetErrorCallback(
-	BbInstance aInstance,
-	BB_ERROR_CALLBACK callback_function_ptr) {
+	BbInstance a_instance,
+	BbErrorCallback callback_function_ptr) {
 
-	BbInstance_T* instance = castInstance(aInstance);
+	BbInstance_T* instance = castInstance(a_instance);
 	if (instance == nullptr) return BB_FAILURE;
 
 	instance->s_configuration_mutex.lock();
@@ -476,9 +476,9 @@ BbResult bbSetErrorCallback(
 }
 
 BbResult bbStartAreaCalibration(
-	BbInstance aInstance) {
+	BbInstance a_instance) {
 
-	BbInstance_T* instance = castInstance(aInstance);
+	BbInstance_T* instance = castInstance(a_instance);
 	if (instance == nullptr) return BB_FAILURE;
 
 	instance->s_configuration_mutex.lock();
@@ -517,9 +517,9 @@ BbResult bbStartAreaCalibration(
 }
 
 BbAreaCalibration bbEndAreaCalibration(
-	BbInstance aInstance) {
+	BbInstance a_instance) {
 
-	BbInstance_T* instance = castInstance(aInstance);
+	BbInstance_T* instance = castInstance(a_instance);
 	if (instance == nullptr) return BbAreaCalibration{};
 
 
@@ -610,12 +610,12 @@ BbAreaCalibration bbEndAreaCalibration(
 }
 
 BbResult bbCalibrateAreaWithClick(
-	BbInstance aInstance,
+	BbInstance a_instance,
 	int hue_threshold,
 	int saturation_threshold,
 	int value_threshold) {
 
-	BbInstance_T* instance = castInstance(aInstance);
+	BbInstance_T* instance = castInstance(a_instance);
 	if (instance == nullptr) return BB_FAILURE;
 
 		cv::Mat clean_frame, frame, mask;
@@ -810,11 +810,11 @@ BbResult bbCalibrateAreaWithClick(
 }
 
 BbResult bbCalibrateAreaWithHSVRanges(
-	BbInstance aInstance,
-	int iLowH, int iHighH, int iLowS,
-	int iHighS, int iLowV, int iHighV) {
+	BbInstance a_instance,
+	int iLowH, int a_high_h, int a_low_s,
+	int a_high_s, int a_low_v, int a_high_v) {
 
-	BbInstance_T* instance = castInstance(aInstance);
+	BbInstance_T* instance = castInstance(a_instance);
 	if (instance == nullptr) return BB_FAILURE;
 
 	cv::Mat clean_frame, frame, mask;
@@ -868,11 +868,11 @@ BbResult bbCalibrateAreaWithHSVRanges(
 	//
 	cv::inRange(frame,
 		cv::Scalar(iLowH,
-			iLowS,
-			iLowV),
-		cv::Scalar(iHighH,
-			iHighS,
-			iHighV),
+			a_low_s,
+			a_low_v),
+		cv::Scalar(a_high_h,
+			a_high_s,
+			a_high_v),
 		mask);
 
 
@@ -994,12 +994,12 @@ BbResult bbCalibrateAreaWithHSVRanges(
 }
 
 BbResult bbCalibrateBallWithClick(
-	BbInstance aInstance,
+	BbInstance a_instance,
 	int hue_threshold,
 	int saturation_threshold,
 	int value_threshold) {
 
-	BbInstance_T* instance = castInstance(aInstance);
+	BbInstance_T* instance = castInstance(a_instance);
 	if (instance == nullptr) return BB_FAILURE;
 	
 	cv::Mat clean_frame, frame, mask;
@@ -1092,9 +1092,9 @@ BbResult bbCalibrateBallWithClick(
 	return BB_SUCCESS;
 }
 
-BbCalibrationSettings bbGetCalibrationSettings(BbInstance aInstance) {
+BbCalibrationSettings bbGetCalibrationSettings(BbInstance a_instance) {
 
-	BbInstance_T* instance = castInstance(aInstance);
+	BbInstance_T* instance = castInstance(a_instance);
 	if (instance == nullptr) return BbCalibrationSettings{};
 
 	BbCalibrationSettings calibration_settings;
@@ -1140,9 +1140,9 @@ BbCalibrationSettings bbGetCalibrationSettings(BbInstance aInstance) {
 	return calibration_settings;
 }
 
-BbResult bbSetCalibrationSettings(BbInstance aInstance, BbCalibrationSettings calibration_settings) {
+BbResult bbSetCalibrationSettings(BbInstance a_instance, BbCalibrationSettings calibration_settings) {
 
-	BbInstance_T* instance = castInstance(aInstance);
+	BbInstance_T* instance = castInstance(a_instance);
 	if (instance == nullptr) return BB_FAILURE;
 
 	std::vector<cv::Point2f> normal_values;
