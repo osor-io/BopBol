@@ -6,10 +6,12 @@
 
 #define TO_STREAM(stream, variable)                            \
   (stream) << #variable " (" << typeid(variable).name() << ")" \
-           << ": " << (variable) << std::endl;
+           << ": " << (variable) << std::endl
 #define LOG(variable) TO_STREAM(std::cout, (variable))
 
-#define MSG(msg)  std::cout << "Message Log: " << msg << std::endl << std::endl ;
+#define MSG(msg)  std::cout << "Message Log: " << msg << std::endl << std::endl
+
+#define ENDL  std::cout << std::endl
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
 #define PRESS_TO_CONTINUE system("pause");
@@ -45,7 +47,8 @@ int main() {
 	bbSetCoordinateCallback(instance, [](float x, float y) -> int {
 		LOG(x);
 		LOG(y);
-		MSG("\n\n");
+		ENDL;
+		ENDL;
 		return 1;
 	});
 	bbSetErrorCallback(instance, NULL);

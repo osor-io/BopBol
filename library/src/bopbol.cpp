@@ -47,7 +47,7 @@ struct MouseClick {
 struct ConfigurationParameters {
 
 	//
-	//	True if we want to show the red dot where the collision has 
+	//	1 if we want to show the red dot where the collision has 
 	//	been detected.
 	//
 	int show_collisions = 1;
@@ -229,8 +229,8 @@ inline BbInstance_T* castInstance(BbInstance instance) {
 //  ============================================
 //
 
-bool bbIsCallable() {
-	return true;
+IMAGE_DLL_API bool bbIsCallable(uint32_t version){
+	return (version == BB_VERSION);
 }
 
 BbResult bbInit(BbInstance a_instance) {
